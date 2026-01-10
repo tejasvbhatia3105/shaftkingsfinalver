@@ -1,0 +1,87 @@
+export function getLegendColor(number: number) {
+  switch (number) {
+    case 0:
+      return '#2C9CDB';
+    case 1:
+      return '#FF5953';
+    case 2:
+      return '#9B51DF';
+    case 3:
+      return '#25AF60';
+    case 4:
+      return '#FAC337';
+    case 5:
+      return '#FA37ED';
+    case 6:
+      return '#3961FB';
+    case 7:
+      return '#9AFF60';
+    case 8:
+      return '#F47B2E';
+    case 9:
+      return '#D738A5';
+    case 10:
+      return '#FF6F61';
+    case 11:
+      return '#7F4C87';
+    case 12:
+      return '#6A84F0';
+    case 13:
+      return '#F7C92E';
+    case 14:
+      return '#C13747';
+    case 15:
+      return '#A1C6E7';
+    case 16:
+      return '#E74C3C';
+    case 17:
+      return '#8E44AD';
+    case 18:
+      return '#1ABC9C';
+    case 19:
+      return '#F39C12';
+    case 20:
+      return '#16A085';
+    case 21:
+      return '#2980B9';
+    case 22:
+      return '#F1C40F';
+    case 23:
+      return '#9B59B6';
+    case 24:
+      return '#34495E';
+    case 25:
+      return '#2ECC71';
+    case 26:
+      return '#F0A500';
+    case 27:
+      return '#E67E22';
+    case 28:
+      return '#8E44AD';
+    case 29:
+      return '#D35400';
+    case 30:
+      return '#5D6D7E';
+    case 31:
+      return '#A93226';
+    case 32:
+      return '#F39C12';
+    case 33:
+      return '#DFFF00';
+    case 34:
+      return '#01A9DB';
+    case 35:
+      return '#FF1493';
+    case 36:
+      return '#008080';
+    case 37:
+      return '#DC143C';
+    case 38:
+      return '#B22222';
+    case 39:
+      return '#8A2BE2';
+
+    default:
+      break;
+  }
+}

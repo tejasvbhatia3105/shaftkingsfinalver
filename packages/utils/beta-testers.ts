@@ -1,0 +1,16 @@
+export const betaTesters = [
+  '34nXRCtK3hVFa7ZwLym7uxyCv2t2zriZGGrYS1e1Vszk',
+  '75gaxDZkBSLqR6XPUi42dWwheArN5eQWgpMAXwgZ5BFA',
+  'B72wRV24DXT3rw5eVRTKMomwmvaaTPSMnhahoZcoJVGx',
+  'DmS6gbLPBPLeo3PdojxrvXEpJPfYLATX2iUPXeSiPifx',
+  'A39NpPhmXtF1hLyASNP29FcRaPJHN3EDGSWYskeaEZch',
+  '8ob7BYtV7eHFaitaesKEwMj1Hr8Bj5Gh6eH25tsbusnZ',
+  'ABHxcFRGFc7QhmkQQZygENDDojLcoEZsLHTBMsRQYndw',
+  '4LWDiZ6is1S5dax65jCQhdw3F2B9jNn4w1vM7fu3eJNF',
+  'BCTdjdcjMiECGFbF5Ps15yjLRPzy5YZGJNa4VdGRbhjB',
+  '8j1MfdZmgMcG4eJxSpST44Et1BfRAyo2wAnmPLy3KVGb',
+  'F7pZQpCCjMeVNkGzvWVFZo1naU72HXHykgzqj4C8XM4X',
+  'HjJQdfTHgC3EBX3471w4st8BXbBmtbaMyCAXNgcUb7dq',
+  '5U4TmSUBqDaefmamimoSGak8GK5xwXoM5nAaCZJpynpL',
+  '2GCcARrcworZnhGEHo6cR69fPxL6HQ9P4toA1NqdJ2x2',
+];

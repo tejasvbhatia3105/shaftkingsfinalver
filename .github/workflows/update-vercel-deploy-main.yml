@@ -1,0 +1,64 @@
+name: Update Vercel Deploy - Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-deploy-file:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+      - name: Cancel previous workflows
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          workflow_id: ${{ github.workflow }}
+          access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          fetch-depth: 0
+          ref: main
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --local user.name "${{ secrets.GIT_USER_NAME }}"
+
+      - name: Check if last commit was from workflow
+        id: check_last_commit
+        run: |
+          LAST_COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
+          GIT_USER_NAME="${{ secrets.GIT_USER_NAME }}"
+          if [ "$LAST_COMMIT_AUTHOR" == "$GIT_USER_NAME" ] && [[ $(git log -1 --pretty=format:'%s') == *"update vercel.deploy"* ]]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Last commit was from this workflow, skipping..."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Proceeding with update..."
+          fi
+
+      - name: Update vercel.deploy file
+        if: steps.check_last_commit.outputs.skip != 'true'
+        run: |
+          # Read the current value from the file
+          CURRENT_VALUE=$(head -n 1 vercel.deploy)
+
+          # Update the file
+          echo "$CURRENT_VALUE" > vercel.deploy
+
+      - name: Commit and push changes
+        if: steps.check_last_commit.outputs.skip != 'true' && github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          git add vercel.deploy
+          REPO="${{ github.repository }}"
+          git commit -m "update vercel.deploy" --allow-empty
+          git push https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/$REPO.git HEAD:main

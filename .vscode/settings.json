@@ -1,0 +1,22 @@
+{
+  "editor.tabSize": 2,
+  "editor.rulers": [120],
+  "editor.wordWrapColumn": 119,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "emmet.showAbbreviationSuggestions": false,
+  "emmet.showExpandedAbbreviation": "never",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "eslint.nodePath": "node_modules/eslint/bin/eslint.js",
+  "eslint.options": {
+    "overrideConfigFile": "./.eslintrc.json"
+  },
+  "css.lint.unknownAtRules": "ignore",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
