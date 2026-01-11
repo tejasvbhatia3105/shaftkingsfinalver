@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import './globals.css';
-import { MontserratFont } from '@/utils/fonts';
+import { MontserratFont, JetBrainsMonoFont } from '@/utils/fonts';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
@@ -64,6 +64,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <body
         className={cn(
           MontserratFont.className,
+          JetBrainsMonoFont.variable,
           'lg:h-full min-h-full bg-black'
         )}
       >

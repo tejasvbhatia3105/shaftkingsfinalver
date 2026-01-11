@@ -100,7 +100,10 @@ const ConnectWallet = ({ className }: ConnectWalletProps) => {
     }
 
     return (
-      <span className="min-w-[80px] whitespace-nowrap text-xs lg:min-w-[107px]">
+      <span 
+        className="min-w-[80px] whitespace-nowrap text-sm lg:min-w-[107px] font-semibold tracking-wide"
+        style={{ fontFamily: '"PolySans Trial", system-ui, sans-serif' }}
+      >
         SIGN IN
       </span>
     );
@@ -121,11 +124,11 @@ const ConnectWallet = ({ className }: ConnectWalletProps) => {
       <div className="flex items-center gap-x-3">
         <Button
           className={cn(
-            ' w-fit justify-center rounded-[1px] border-0 font-medium text-black uppercase text-xs',
+            'w-fit justify-center rounded-[4px] border-0 font-medium text-black uppercase text-xs',
             {
               'bg-gray-200 dark:bg-white/[2%] border border-white/10 p-0 h-[24px]':
                 wallet?.publicKey,
-              'h-[30px] lg:h-[44px] px-1': !wallet?.publicKey,
+              'h-[30px] lg:h-[44px] px-4 !bg-[#F7B519] hover:!bg-[#F7B519]/90': !wallet?.publicKey,
             }
           )}
           color={wallet?.publicKey ? 'secondary' : 'gold'}

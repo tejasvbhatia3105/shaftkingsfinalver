@@ -4,6 +4,8 @@ import {
   Permanent_Marker,
   Poppins,
   Montserrat,
+  Orbitron,
+  JetBrains_Mono,
 } from 'next/font/google';
 import localFont from 'next/font/local';
 
@@ -30,6 +32,18 @@ export const MontserratFont = Montserrat({
 export const anton = Anton({
   subsets: ['latin'],
   weight: '400',
+});
+
+export const OrbitronFont = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-orbitron',
+});
+
+export const JetBrainsMonoFont = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-jetbrains-mono',
 });
 
 export const Geoform = localFont({

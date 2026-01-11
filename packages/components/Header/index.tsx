@@ -5,49 +5,28 @@ import { useMarket } from '@/context/Market';
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTriad } from '@/context/Triad';
-import { copyToClipboard } from '@/utils/copyToClipboard';
 import { useUser } from '@/context/User';
-import { PoppinsFont } from '@/utils/fonts';
-import { X } from 'lucide-react';
+import { X, Search } from 'lucide-react';
 import ConnectWallet from '../ConnectWallet';
-import { IconAlreadyCopy, IconAttachment, MenuIcon } from '../Icons';
+import { MenuIcon } from '../Icons';
 import LineLoading from '../LineLoading';
 
 export function Header() {
   const { loadingGlobal, rulesModalOpen, isModalOpen } = useGlobal();
-  const [bgHeader, setBgHeader] = useState(false);
   const pathname = usePathname();
-  const { connectedUser, getUser } = useTriad();
+  const { getUser } = useTriad();
   const { openClaimModal } = useMarket();
-  const [isCopied, setIsCopied] = useState(false);
   const { wallet } = useUser();
   const [showMobileNav, setShowMobileNav] = useState(false);
 
-  const isLegal = false;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setBgHeader(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const navigationLinks = [
-    { name: 'Predict Now', link: '/' },
-    { name: 'Information', link: 'https://info.shaftkings.com' },
-    { name: 'How it works', link: 'https://info.shaftkings.com/how-it-works' },
-    { name: 'Refer & Earn', link: '/referral' },
+    { name: 'HOME', link: '/', highlight: true },
+    { name: 'STATISTICS', link: '/docs' },
+    { name: '• LIVE', link: '/', isLive: true },
   ];
-
-  const handleCopy = useCallback(() => {
-    copyToClipboard(`https://shaftkings.com/?ref=${connectedUser?.name}`);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-  }, [connectedUser?.name]);
 
   useEffect(() => {
     if (!wallet?.publicKey.toBase58()) return;
@@ -61,103 +40,110 @@ export function Header() {
       <header
         id="main-header"
         className={cn(
-          'fixed left-0 z-30 h-[44px] w-full border-b border-shaftkings-gray-1000 bg-black transition-all duration-200 dark:border-[#555555] lg:h-[80px]',
-          PoppinsFont.className,
+          'fixed left-0 z-30 h-[70px] w-full bg-black border-b border-white/10',
           {
-            'bg-white dark:bg-[#13141A1A] backdrop-blur-xl': bgHeader,
             'z-0':
               openClaimModal ||
               (rulesModalOpen && pathname.includes('market')) ||
               (isModalOpen && pathname === '/staking'),
-            '!bg-white': isLegal,
           }
         )}
       >
-        <div className="mx-auto flex h-full items-center justify-between px-2.5 max-[768px]:py-2 lg:px-4">
-          <Link href="/">
-            <img
-              width={82}
-              height={30}
-              className="relative h-[19px] w-[185px] object-contain lg:h-[24px] lg:w-[224px]"
-              src={
-                isLegal
-                  ? '/assets/svg/shaftkings-black.svg'
-                  : '/assets/svg/shaftkings-gold.svg'
-              }
-              alt="ShaftKings logo"
+        <div className="max-w-7xl mx-auto flex h-full items-center justify-between px-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <img 
+              src="/assets/img/shaftkingslogo.png" 
+              alt="ShaftKings" 
+              className="h-8 w-auto object-contain"
             />
           </Link>
 
-          <div className="flex items-center gap-x-4">
-            <ul className="hidden gap-x-4 lg:flex">
-              {navigationLinks.map((item, idx) => (
-                <li
-                  className={cn(
-                    'h-[42px] w-[151px] flex items-center justify-center text-xs uppercase tracking-[2px]',
-                    pathname === item.link ? 'text-white' : 'text-[#C0C0C0]'
-                  )}
-                  key={idx}
-                >
-                  <Link href={item.link}>{item.name}</Link>
-                </li>
-              ))}
-            </ul>
-
-            {wallet?.publicKey && (
-              <button
+          {/* Center Nav */}
+          <nav className="hidden lg:flex items-center gap-8">
+            {navigationLinks.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.link}
                 className={cn(
-                  'hidden sm:flex items-center justify-center min-w-[160px] max-w-[160px] gap-1.5 rounded px-1.5 py-0.5 text-xs font-medium transition-all',
-                  isCopied
-                    ? 'bg-shaftkings-green-200 text-white'
-                    : 'bg-black/5 text-shaftkings-gray-600 dark:bg-white/5 dark:text-[#C0C0C0]'
+                  'text-sm font-medium tracking-wider transition-colors',
+                  item.isLive 
+                    ? 'text-[#ef4444]' 
+                    : pathname === item.link 
+                      ? 'text-[#60a5fa]' 
+                      : 'text-white/70 hover:text-white'
                 )}
-                onClick={handleCopy}
               >
-                {isCopied ? <IconAlreadyCopy /> : <IconAttachment />}
-                {isCopied ? 'Copied!' : 'Copy Referral Link'}
-              </button>
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-4">
+            {/* Search Bar */}
+            <div className="hidden md:flex items-center bg-white/5 border border-white/10 rounded-lg px-4 py-2 w-[200px]">
+              <Search className="w-4 h-4 text-white/40 mr-2" />
+              <input
+                type="text"
+                placeholder="SEARCH"
+                className="bg-transparent text-white/60 text-sm placeholder-white/40 outline-none w-full"
+              />
+            </div>
+
+            {/* Auth Buttons / Wallet */}
+            {wallet?.connected ? (
+              <ConnectWallet />
+            ) : (
+              <div className="flex items-center gap-3">
+                <ConnectWallet />
+              </div>
             )}
 
-            <ConnectWallet />
-            {wallet?.connected && (
-              <button
-                className="lg:hidden"
-                onClick={() => setShowMobileNav(true)}
-              >
-                <MenuIcon />
-              </button>
-            )}
+            {/* Mobile Menu */}
+            <button
+              className="lg:hidden text-white"
+              onClick={() => setShowMobileNav(true)}
+            >
+              <MenuIcon />
+            </button>
           </div>
         </div>
       </header>
 
       {/* Mobile Nav Modal */}
       {showMobileNav && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm lg:hidden">
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm lg:hidden">
           <div className="flex h-full flex-col px-6 py-8">
             <div className="mb-8 flex items-center justify-between">
-              <img
-                src="/assets/img/shaftkings-gold.png"
-                alt="ShaftKings"
-                className="h-6 w-auto"
-              />
+              <span className="text-white text-xl font-light tracking-wide">
+                <span className="italic">Shaft</span>
+                <span className="text-[#c9a227] font-semibold">Kings</span>
+              </span>
               <button onClick={() => setShowMobileNav(false)}>
                 <X className="size-6 text-white" />
               </button>
             </div>
 
-            <nav className="flex flex-col gap-6 text-white">
+            <nav className="flex flex-col gap-6">
               {navigationLinks.map((item, idx) => (
                 <Link
                   key={idx}
                   href={item.link}
                   onClick={() => setShowMobileNav(false)}
-                  className="text-lg font-medium"
+                  className={cn(
+                    'text-lg font-medium',
+                    item.isLive ? 'text-[#ef4444]' : 'text-white'
+                  )}
                 >
                   {item.name}
                 </Link>
               ))}
             </nav>
+
+            <div className="mt-8">
+              <ConnectWallet />
+            </div>
           </div>
         </div>
       )}

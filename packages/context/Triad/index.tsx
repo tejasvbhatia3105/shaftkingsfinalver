@@ -128,9 +128,19 @@ export function TriadProvider({ children, ...rest }: TriadProviderProps) {
   );
 
   const getFeePayer = useCallback(async () => {
-    const res = await fetch('/api/get-payer');
-    const data = await res.json();
-    setFeePayer(new PublicKey(data.feePayer));
+    try {
+      const res = await fetch('/api/get-payer');
+      if (!res.ok) {
+        console.warn('Fee payer not configured. Transactions will require user to pay gas fees.');
+        return;
+      }
+      const data = await res.json();
+      if (data.feePayer) {
+        setFeePayer(new PublicKey(data.feePayer));
+      }
+    } catch (error) {
+      console.warn('Failed to fetch fee payer:', error);
+    }
   }, []);
 
   useEffect(() => {

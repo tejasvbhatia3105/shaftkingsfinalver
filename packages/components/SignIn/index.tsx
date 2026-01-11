@@ -27,11 +27,9 @@ export function SignIn() {
       >
         <div className=" h-fit w-full max-w-[450px] overflow-y-auto bg-black bg-gradient-to-b from-black/70 via-black to-black px-5 py-6">
           <img
-            className="mx-auto mb-3 size-[90px]"
-            src="/assets/svg/shaftkings-black-variation.svg"
-            width={90}
-            height={60}
-            alt="logo"
+            className="mx-auto mb-3 h-[60px] w-auto"
+            src="/assets/img/shaftkingslogo.png"
+            alt="ShaftKings logo"
           />
 
           <h3 className="mb-6 mt-2  text-center text-xl font-semibold text-shaftkings-dark-100 dark:text-white">

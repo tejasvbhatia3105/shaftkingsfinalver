@@ -14,36 +14,15 @@ export function Footer() {
       title: 'Platform',
       links: [
         { name: 'PREDICT NOW', link: '/' },
-        {
-          name: 'HOW IT WORKS',
-          link: 'https://info.shaftkings.com/how-it-works',
-        },
+        { name: 'INFORMATION', link: '/docs' },
         { name: 'REFER & EARN', link: '/referral' },
       ],
     },
     {
-      title: 'Socials',
+      title: 'Legal',
       links: [
-        {
-          name: 'LINKEDIN',
-          link: 'https://www.linkedin.com/company/shaftkings',
-        },
-        { name: 'DISCORD', link: 'https://discord.gg/shaftkings' },
-        { name: 'X', link: 'https://x.com/shaftkings' },
-      ],
-    },
-    {
-      title: 'Resources',
-      links: [
-        { name: 'BLOG', link: 'https://info.shaftkings.com/blog' },
-        { name: 'GUIDE', link: 'https://info.shaftkings.com/guide' },
-        { name: 'FAQS', link: 'https://info.shaftkings.com/faq' },
-      ],
-    },
-    {
-      title: 'Contact',
-      links: [
-        { name: 'CONTACT', link: 'https://info.shaftkings.com/contact' },
+        { name: 'TERMS', link: '/terms' },
+        { name: 'PRIVACY', link: '/privacy' },
       ],
     },
   ];
@@ -69,12 +48,8 @@ export function Footer() {
           <img
             width={82}
             height={30}
-            className="relative h-[24px] w-[224px] object-contain lg:h-[32px] lg:w-[318px] lg:object-cover"
-            src={
-              isLegal
-                ? '/assets/svg/shaftkings-black.svg'
-                : '/assets/svg/shaftkings-gold.svg'
-            }
+            className="relative h-[32px] w-auto object-contain lg:h-[40px]"
+            src="/assets/img/shaftkingslogo.png"
             alt="ShaftKings logo"
           />
         </div>

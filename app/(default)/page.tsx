@@ -3,35 +3,23 @@ import type { Metadata } from 'next';
 import Markets from 'packages/shared/Markets';
 
 export const metadata: Metadata = {
-  title: 'Cricket | Markets',
-  description: '',
+  title: 'ShaftKings | Prediction Market',
+  description: 'ShaftKings Prediction Market',
   openGraph: {
-    title: 'Cricket | Markets',
-    description: '',
-    url: '',
-    siteName: 'Cricket',
-    images: [
-      {
-        url: '',
-        width: 800,
-        height: 500,
-      },
-    ],
+    title: 'ShaftKings | Prediction Market',
+    description: 'ShaftKings Prediction Market',
+    siteName: 'ShaftKings',
     type: 'website',
   },
   twitter: {
-    title: 'Cricket | Markets',
-    description: '',
-    images: '',
+    title: 'ShaftKings | Prediction Market',
+    description: 'ShaftKings Prediction Market',
     card: 'summary_large_image',
   },
   viewport: {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
-  },
-  alternates: {
-    canonical: '',
   },
 };
 
