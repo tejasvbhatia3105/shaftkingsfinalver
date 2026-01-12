@@ -53,14 +53,25 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
   }, [marketEndTime, market?.marketEnd]);
 
   // Calculate prices and potential returns
-  const hypePrice = market ? Number(market.hypePrice) / 1_000_000 : 0.38;
-  const flopPrice = market ? Number(market.flopPrice) / 1_000_000 : 0.62;
+  // hypePrice and flopPrice from API are already decimals (0 to 1), e.g., 0.5 = 50%
+  const hypePrice = market ? Number(market.hypePrice) : 0.5;
+  const flopPrice = market ? Number(market.flopPrice) : 0.5;
   
   const hypePriceCents = Math.round(hypePrice * 100);
   const flopPriceCents = Math.round(flopPrice * 100);
   
-  const hypeReturn = hypePrice > 0 ? Math.round(100 / hypePrice) : 263;
-  const flopReturn = flopPrice > 0 ? Math.round(100 / flopPrice) : 161;
+  // Return calculation: $100 invested returns $100/price if the bet wins
+  const hypeReturn = hypePrice > 0 ? Math.round(100 / hypePrice) : 200;
+  const flopReturn = flopPrice > 0 ? Math.round(100 / flopPrice) : 200;
+
+  // Custom competitor names for ShaftKings display
+  // TODO: These can be made dynamic per market in the future
+  const hypeSideName = 'TRISTAN';
+  const flopSideName = 'ASHER';
+  
+  // Custom market title for display
+  // TODO: Can be made dynamic per market in the future
+  const marketTitle = 'UCLA VS USC';
 
   if (!market) {
     return (
@@ -153,20 +164,19 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
               background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 40%, transparent 100%)',
             }}
           />
-          {/* Name with UCLA logo */}
+          {/* Name with logo */}
           <div className="absolute bottom-[30px] left-[120px] flex items-center gap-3">
             <img 
               src="/assets/img/uclalogo.png" 
-              alt="UCLA" 
+              alt={flopSideName} 
               className="w-12 h-12 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             />
             <div className="text-left">
               <h3 
                 className={`text-white text-2xl font-bold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ${OrbitronFont.className}`}
               >
-                ASHER
+                {flopSideName.toUpperCase()}
               </h3>
-              <p className={`text-white/50 text-xs tracking-[0.2em] uppercase ${JetBrainsMonoFont.className}`}>SMITH</p>
             </div>
           </div>
         </div>
@@ -192,19 +202,18 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
               background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 40%, transparent 100%)',
             }}
           />
-          {/* Name with USC logo */}
+          {/* Name with logo */}
           <div className="absolute bottom-[30px] right-[120px] flex items-center gap-3">
             <div className="text-right">
               <h3 
                 className={`text-white text-2xl font-bold tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ${OrbitronFont.className}`}
               >
-                TRISTAN
+                {hypeSideName.toUpperCase()}
               </h3>
-              <p className={`text-white/50 text-xs tracking-[0.2em] uppercase ${JetBrainsMonoFont.className}`}>DOE</p>
             </div>
             <img 
               src="/assets/img/usclogo.png" 
-              alt="USC" 
+              alt={hypeSideName} 
               className="w-12 h-12 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             />
           </div>
@@ -212,10 +221,10 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
 
         {/* CENTER CONTENT */}
         <div className="relative z-10 mx-auto max-w-[650px] px-4">
-          {/* Rose Bowl LA */}
+          {/* Category/Subtitle */}
           <div className="text-center pt-5">
             <p className="text-white/70 text-xs tracking-[0.35em] uppercase font-medium">
-              ROSE BOWL LA
+              {data.category?.toUpperCase() || 'PREDICTION MARKET'}
             </p>
           </div>
 
@@ -225,7 +234,7 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
               className={`text-5xl lg:text-[56px] font-black text-white ${OrbitronFont.className}`}
               style={{ letterSpacing: '0.03em' }}
             >
-              UCLA VS USC
+              {marketTitle.toUpperCase()}
             </h1>
             {/* Slashes - white diagonal lines, positioned so gradient cuts through middle */}
             <div className="text-white/60 text-base tracking-[0.15em] mt-3">
@@ -238,8 +247,8 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
             <PriceChart 
               hypePrice={hypePrice} 
               flopPrice={flopPrice}
-              yesSideName="TRISTAN"
-              noSideName="ASHER"
+              yesSideName={hypeSideName}
+              noSideName={flopSideName}
               priceHistory={priceHistory}
               marketEndTime={marketEndTime}
               marketId={market.id}
@@ -254,14 +263,14 @@ const FeaturedMarket: React.FC<FeaturedMarketProps> = ({ data }) => {
               className="flex-1 bg-[#1e3a5f] hover:bg-[#2a4a7f] border border-[#3b82f6]/40 text-white font-medium py-2.5 rounded text-base transition-colors"
               onClick={(e) => e.preventDefault()}
             >
-              <span className="opacity-70">UCLA</span> <span className="opacity-100">{flopPriceCents}¢</span>
+              <span className="opacity-70">{flopSideName}</span> <span className="opacity-100">{flopPriceCents}¢</span>
             </button>
             
             <button 
               className="flex-1 bg-[#dc2626] hover:bg-[#b91c1c] text-white font-medium py-2.5 rounded text-base transition-colors"
               onClick={(e) => e.preventDefault()}
             >
-              <span className="opacity-70">USC</span> <span className="opacity-100">{hypePriceCents}¢</span>
+              <span className="opacity-70">{hypeSideName}</span> <span className="opacity-100">{hypePriceCents}¢</span>
             </button>
           </div>
 

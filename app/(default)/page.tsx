@@ -1,6 +1,9 @@
-import { fetchMarkets } from '@/shared/Markets/hooks';
+import { fetchMarketById } from '@/shared/Markets/hooks';
 import type { Metadata } from 'next';
 import Markets from 'packages/shared/Markets';
+
+// Featured market ID for ShaftKings homepage
+const FEATURED_MARKET_ID = '3146';
 
 export const metadata: Metadata = {
   title: 'ShaftKings | Prediction Market',
@@ -24,6 +27,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const initialMarkets = await fetchMarkets({ status: 'all' });
-  return <Markets initialMarkets={initialMarkets} />;
+  const featuredMarket = await fetchMarketById(FEATURED_MARKET_ID);
+  return <Markets initialMarkets={featuredMarket ? [featuredMarket] : []} />;
 }

@@ -82,7 +82,7 @@ const ConnectWallet = ({ className }: ConnectWalletProps) => {
       return (
         <>
           <div className="flex size-6 items-center justify-center rounded-full">
-            {connectedUser?.image.trim() ? (
+            {connectedUser?.image?.trim() ? (
               <Image
                 className="size-[24px] object-cover"
                 src={connectedUser.image}
@@ -149,7 +149,7 @@ const ConnectWallet = ({ className }: ConnectWalletProps) => {
           <div className="mb-2 flex gap-x-3 border-b border-white/5 px-4 pb-4">
             {wallet?.publicKey && (
               <div className="flex size-[42px] items-center justify-center overflow-hidden rounded">
-                {connectedUser?.image.trim() ? (
+                {connectedUser?.image?.trim() ? (
                   <Image
                     className="size-[42px] object-cover"
                     src={connectedUser.image}

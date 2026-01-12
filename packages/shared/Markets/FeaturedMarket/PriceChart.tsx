@@ -142,8 +142,9 @@ const PriceChart: React.FC<PriceChartProps> = ({
       }
       
       sampled.forEach((price) => {
-        const hype = Number(price.hypePrice) / 1_000_000;
-        const flop = Number(price.flopPrice) / 1_000_000;
+        // hypePrice and flopPrice from API are already decimals (0 to 1)
+        const hype = Number(price.hypePrice);
+        const flop = Number(price.flopPrice);
         
         hypeData.push(Math.max(0.01, Math.min(0.99, hype || 0.5)));
         flopData.push(Math.max(0.01, Math.min(0.99, flop || 0.5)));

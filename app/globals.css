@@ -44,6 +44,15 @@ input[type='number'] {
   display: none;
 }
 
+/* Utility class for hiding scrollbar on specific elements */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .Toastify__toast-icon {
   display: none !important;
 }

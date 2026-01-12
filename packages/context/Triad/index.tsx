@@ -349,25 +349,41 @@ export function TriadProvider({ children, ...rest }: TriadProviderProps) {
       const ref = searchParams.get('ref');
       const refLocalStorage = localStorage.getItem('ref');
 
-      const referralCode = ref || refLocalStorage || 'cricket';
+      const referralCode = ref || refLocalStorage || 'shaftkings';
 
       if (referralCode && wallet?.publicKey) {
         localStorage.setItem('ref', referralCode);
 
-        const referralUser = await api.get(`/user/username/${referralCode}`);
+        try {
+          const referralUser = await api.get(`/user/username/${referralCode}`);
 
-        const isWeb2 = !!userMagic?.oauth?.provider;
-        const email = userMagic?.magic?.userMetadata?.email ?? '';
-        const nameFromMagic = userMagic?.oauth.userInfo.name;
+          const isWeb2 = !!userMagic?.oauth?.provider;
+          const email = userMagic?.magic?.userMetadata?.email ?? '';
+          const nameFromMagic = userMagic?.oauth?.userInfo?.name;
 
-        const name = nameFromMagic?.trim() || wallet.publicKey.toBase58();
+          const name = nameFromMagic?.trim() || wallet.publicKey.toBase58();
 
-        await createReferral({
-          name,
-          referral: referralUser.data.authority,
-          isWeb2,
-          email,
-        });
+          await createReferral({
+            name,
+            referral: referralUser.data?.authority || referralCode,
+            isWeb2,
+            email,
+          });
+        } catch (error) {
+          console.warn('Failed to fetch referral user, using default:', error);
+          // Fallback: create user without referral lookup
+          const isWeb2 = !!userMagic?.oauth?.provider;
+          const email = userMagic?.magic?.userMetadata?.email ?? '';
+          const nameFromMagic = userMagic?.oauth?.userInfo?.name;
+          const name = nameFromMagic?.trim() || wallet.publicKey.toBase58();
+
+          await createReferral({
+            name,
+            referral: referralCode,
+            isWeb2,
+            email,
+          });
+        }
       }
     };
 

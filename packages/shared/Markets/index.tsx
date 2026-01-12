@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import type { MainMarket } from '@/types/market';
 import { WinningDirection } from '@/types/market';
 import FeaturedMarket from './FeaturedMarket';
+import PreviousRaces from './PreviousRaces';
 
 const Markets = ({ initialMarkets }: { initialMarkets: MainMarket[] }) => {
   // Get the market with the highest volume that's still active
@@ -39,6 +40,9 @@ const Markets = ({ initialMarkets }: { initialMarkets: MainMarket[] }) => {
             No markets available
           </div>
         )}
+        
+        {/* Previous Races Section */}
+        <PreviousRaces />
       </div>
     </div>
   );
